@@ -1,0 +1,38 @@
+Explication du mode 0777 de open :
+    - /* 0777 dans open est un mode donnant les droit 777 de chmod 
+	permettant d'accerder au fichier, le lire ecrire et l'executer.
+	0777 est en octal un language qui peut s'adapter au binaire 
+	qui fait 511 en decimal.
+	Soit 0777 octal = 511 decimal. mais on peut mettre 0777 qui est egale a = 777.
+	Pour les permissions c'est normal car le 0 ici va 
+	permettre au programme open de le reconnaitre en octal.
+    0666 est utiliser par bash, nous par securiter on utilise la meme.
+	Equivalent de < dans l'exemple du sujet */
+
+Explication Child process : 
+    - Ligne 29 : //Ici -1 fait office d'erreur pour la fonction open. C'est dans le man de open.
+
+    - Ligne 31 : //STDOUT_FILENO est une constante du .h unistd pour désigner la sortie standard. On aurait pu mettre 1
+
+    - Ligne 34 : //Va executer la commande mise en argv[2] soit la cmd1, et la chercher dans envp (l'environnement).
+
+Explication parent process : 
+    - Ligne 49 : //Va soit lire uniquement le fichier (O_WRONLY),Soit créer le fichier s'il n'existe pas (O_CREAT) ou tronqué tout cela(O_TRUNC)
+
+    - Ligne 50 : //Pour la ligne precedente les trois flag combiner ont la meme valeur que la fonction creat(). Ici creat(path, mode) = open(path, O_WRONLY|O_CREAT|O_TRUNC, mode), mais comme la 
+	commande creat n'est pa accepter, on utilise open.
+
+Explication main :
+    - Ligne 74 :  //Si le pipe fait une erreur
+
+    - Ligne 76 :  //On prepare le fork avant le procesus enfant
+
+    - Ligne 77 :  //Pareil si le fork se passe mal , erreur
+
+    - Ligne 80 :  //Une fois toute les securité passer on procede au processus enfant
+
+    - Ligne 81 :  //On attend qu'il se termine
+
+    - Ligne 82 :  //Puis processus parents
+
+    - Ligne 84 : //Si il n'y a pas 5 argc
